@@ -14,10 +14,10 @@ let floorImages = []
 let outsideImage
 const HORIZONTAL = true
 const VERTICAL = false
-const UP = 0
-const RIGHT = 1
-const DOWN = 2
-const LEFT = 3
+const UP = 30
+const RIGHT = 0
+const DOWN = 10
+const LEFT = 20
 
 //maps:
 
