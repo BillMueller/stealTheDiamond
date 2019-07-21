@@ -78,4 +78,8 @@ class Player {
     this.sprintIsActive = false
     playerMoves = false
   }
+
+  getPosition(){
+    return [this.xpos,this.ypos]
+  }
 }
