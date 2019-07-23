@@ -8,7 +8,7 @@ class Map {
     this.prepareProps()
   }
 
-  updateProps(){
+  updateProps() {
     for (let g = 0; g < this.guards.length; g++) {
       this.guards[g].updateFacing()
       this.guards[g].move()
@@ -38,13 +38,17 @@ class Map {
     this.guards = []
     for (let p = 0; p < this.props.length; p++) {
       let currentProp = this.props[p]
-      if (currentProp[0] == 1) {
-        print("ok")
-        let pathPositions = []
-        for(let pp = 1; pp < currentProp.length; pp++){
-          pathPositions.push([currentProp[pp][0] * 40 + guiBorder + 20, currentProp[pp][1] * 40 + guiBorder + 20])
-        }
-        this.guards.push(new Guard(pathPositions))
+      switch (currentProp[0]) {
+        case 0:
+        this.player = new Player(currentProp[1][0]*4*size+guiBorder+size*2, currentProp[1][1]*4*size+guiBorder+size*2)
+          break
+        case 1:
+          let pathPositions = []
+          for (let pp = 1; pp < currentProp.length; pp++) {
+            pathPositions.push([currentProp[pp][0] * 40 + guiBorder + 20, currentProp[pp][1] * 40 + guiBorder + 20])
+          }
+          this.guards.push(new Guard(pathPositions))
+          break
       }
     }
   }
@@ -71,5 +75,9 @@ class Map {
 
   drawEmptySpace(x, y, type) {
     image(floorImages[0], guiBorder + x * size * 4, guiBorder + y * size * 4, size * 4, size * 4)
+  }
+
+  spawnPlayer(){
+    player = this.player
   }
 }
