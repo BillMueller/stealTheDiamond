@@ -50,8 +50,18 @@ class Map {
           this.loadedProps.push(new Guard(pathPositions))
           break
         case 2:
-        currentProp.shift()
-          this.loadedProps.push(new SecurityCamera(currentProp))
+          currentProp.shift()
+          switch (currentProp.shift()) {
+            case 0:
+              this.loadedProps.push(new WallCamera(currentProp))
+              break
+            case 1:
+              this.loadedProps.push(new TurningRoofCamera(currentProp))
+              break
+            case 2:
+              this.loadedProps.push(new RandomRoofCamera(currentProp))
+              break
+          }
       }
     }
   }

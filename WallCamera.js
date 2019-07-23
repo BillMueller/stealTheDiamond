@@ -1,4 +1,4 @@
-class SecurityCamera {
+class WallCamera {
   constructor(data) {
     this.loadData(data)
     this.currentAngle = this.minAngle
@@ -9,8 +9,8 @@ class SecurityCamera {
     this.xpos = data[0][0] * size * 4 + guiBorder + size * 2
     this.ypos = data[0][1] * size * 4 + guiBorder + size * 2
     this.facing = data[0][2]
-    this.minAngle = this.facing*9-data[1][0]
-    this.maxAngle = this.facing*9+data[1][0]
+    this.minAngle = this.facing * 9 - data[1][0]
+    this.maxAngle = this.facing * 9 + data[1][0]
     this.speed = data[1][2] / 5
     switch (this.facing) {
       case 0:
@@ -45,13 +45,13 @@ class SecurityCamera {
   }
 
   draw() {
-    noStroke()
-    translate(this.xpos,this.ypos)
+    translate(this.xpos, this.ypos)
     rotate(radians(this.currentAngle))
-    fill(50, 50, 255)
-    arc(size*0.5, 0, 80, 80, radians(-50), radians(50))
+    if (difficulty != HARD) {
+      this.drawVisionArea()
+    }
     fill(0, 0, 0)
-    rect(-size*0.4,-size*0.25,size,size/2)
+    rect(-size * 0.4, -size * 0.25, size, size / 2)
     resetMatrix()
   }
 
@@ -61,10 +61,16 @@ class SecurityCamera {
     let verticalDistance = this.ypos - playerPosition[1]
     let distance = Math.sqrt(horizontalDistance ** 2 + verticalDistance ** 2)
     let playerAngle = degrees(Math.atan(verticalDistance / horizontalDistance))
-    if(horizontalDistance >= 0){
-      playerAngle+= 180
+    if (horizontalDistance >= 0) {
+      playerAngle += 180
     }
-    playerAngle = (playerAngle+360)%360
-    return distance < size*.5+40 && playerAngle < this.currentAngle+50 && playerAngle > this.currentAngle-50
+    playerAngle = (playerAngle + 360) % 360
+    return distance < size * .5 + 45 && playerAngle < this.currentAngle + 50 && playerAngle > this.currentAngle - 50
+  }
+
+  drawVisionArea() {
+    noStroke()
+    fill(0, 0, 255, 150)
+    arc(size * 0.5, 0, 90, 90, radians(-50), radians(50))
   }
 }

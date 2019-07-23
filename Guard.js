@@ -10,10 +10,9 @@ class Guard {
   }
 
   draw() {
-    //this.drawMovementPoints()
-    noStroke()
-    fill(50, 50, 255)
-    arc(this.xpos, this.ypos, 80, 80, radians(this.facing * 9 - 70), radians(this.facing * 9 + 70))
+    if (difficulty != HARD) {
+      this.drawVisionArea()
+    }
     stroke(0, 0, 0)
     strokeWeight(size)
     point(this.xpos, this.ypos)
@@ -81,18 +80,11 @@ class Guard {
     point(this.movementPath[this.currentPathID][0], this.movementPath[this.currentPathID][1])
   }
 
-
-
-  //testCollisionWithPlayer() {
-  //  let playerPosition = player.getPosition()
-  //  let horizontalDistance = Math.abs(this.xpos - playerPosition[0])
-  //  let verticalDistance = Math.abs(this.ypos - playerPosition[1])
-  //  let playerAngle = degrees(Math.atan(verticalDistance / horizontalDistance))
-  //  if ((horizontalDistance == 0 && verticalDistance == 0) || ((Math.sqrt(horizontalDistance ** 2 + verticalDistance ** 2) < 40) && ((this.facing == RIGHT && playerAngle < 60 && this.xpos-playerPosition[0] < 0) || (this.facing == LEFT && playerAngle < 60 && this.xpos-playerPosition[0] > 0) || (this.facing == DOWN && playerAngle > 30 && this.ypos-playerPosition[1] < 0) || (this.facing == UP && playerAngle > 30 && this.ypos-playerPosition[1] > 0)))) {
-  //    return true
-  //  }
-  //  return false
-  //}
+  drawVisionArea() {
+    noStroke()
+    fill(0, 0, 255, 150)
+    arc(this.xpos, this.ypos, 80, 80, radians(this.facing * 9 - 70), radians(this.facing * 9 + 70))
+  }
 
   testCollisionWithPlayer() {
     let playerPosition = player.getPosition()
@@ -100,10 +92,10 @@ class Guard {
     let verticalDistance = this.ypos - playerPosition[1]
     let distance = Math.sqrt(horizontalDistance ** 2 + verticalDistance ** 2)
     let playerAngle = degrees(Math.atan(verticalDistance / horizontalDistance))
-    if(horizontalDistance >= 0){
-      playerAngle+= 180
+    if (horizontalDistance >= 0) {
+      playerAngle += 180
     }
-    playerAngle = (playerAngle+360)%360
-    return distance < size*.5+40 && playerAngle < this.facing*9+70 && playerAngle > this.facing*9-70
+    playerAngle = (playerAngle + 360) % 360
+    return distance < size * .5 + 40 && playerAngle < this.facing * 9 + 70 && playerAngle > this.facing * 9 - 70
   }
 }
