@@ -9,9 +9,9 @@ class Map {
   }
 
   updateProps() {
-    for (let g = 0; g < this.guards.length; g++) {
-      this.guards[g].updateFacing()
-      this.guards[g].move()
+    for (let g = 0; g < this.loadedProps.length; g++) {
+      this.loadedProps[g].update()
+      this.loadedProps[g].move()
     }
   }
 
@@ -29,26 +29,29 @@ class Map {
         }
       }
     }
-    for (let g = 0; g < this.guards.length; g++) {
-      this.guards[g].draw()
+    for (let g = 0; g < this.loadedProps.length; g++) {
+      this.loadedProps[g].draw()
     }
   }
 
   prepareProps() {
-    this.guards = []
+    this.loadedProps = []
     for (let p = 0; p < this.props.length; p++) {
       let currentProp = this.props[p]
       switch (currentProp[0]) {
         case 0:
-        this.player = new Player(currentProp[1][0]*4*size+guiBorder+size*2, currentProp[1][1]*4*size+guiBorder+size*2)
+          this.player = new Player(currentProp[1][0] * 4 * size + guiBorder + size * 2, currentProp[1][1] * 4 * size + guiBorder + size * 2)
           break
         case 1:
           let pathPositions = []
           for (let pp = 1; pp < currentProp.length; pp++) {
             pathPositions.push([currentProp[pp][0] * 40 + guiBorder + 20, currentProp[pp][1] * 40 + guiBorder + 20])
           }
-          this.guards.push(new Guard(pathPositions))
+          this.loadedProps.push(new Guard(pathPositions))
           break
+        case 2:
+        currentProp.shift()
+          this.loadedProps.push(new SecurityCamera(currentProp))
       }
     }
   }
@@ -77,7 +80,7 @@ class Map {
     image(floorImages[0], guiBorder + x * size * 4, guiBorder + y * size * 4, size * 4, size * 4)
   }
 
-  spawnPlayer(){
+  spawnPlayer() {
     player = this.player
   }
 }

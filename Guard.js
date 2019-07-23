@@ -5,22 +5,21 @@ class Guard {
     this.currentPathID = 0
     this.facing = UP
     this.movementPath = movementPath
-    this.updateFacing()
+    this.update()
     this.target = this.facing
   }
 
   draw() {
-    this.drawMovementPoints()
+    //this.drawMovementPoints()
     noStroke()
     fill(50, 50, 255)
-    arc(this.xpos, this.ypos, 80, 80, radians(this.facing * 9 - 60), radians(this.facing * 9 + 60))
-    stroke(0, 0, 255)
+    arc(this.xpos, this.ypos, 80, 80, radians(this.facing * 9 - 70), radians(this.facing * 9 + 70))
+    stroke(0, 0, 0)
     strokeWeight(size)
     point(this.xpos, this.ypos)
-    print(this.testCollisionWithPlayer())
   }
 
-  updateFacing() {
+  update() {
     if (this.xpos == this.movementPath[this.currentPathID][0] && this.ypos == this.movementPath[this.currentPathID][1]) {
       this.currentPathID = (this.currentPathID + 1) % this.movementPath.length
     }
@@ -84,14 +83,27 @@ class Guard {
 
 
 
+  //testCollisionWithPlayer() {
+  //  let playerPosition = player.getPosition()
+  //  let horizontalDistance = Math.abs(this.xpos - playerPosition[0])
+  //  let verticalDistance = Math.abs(this.ypos - playerPosition[1])
+  //  let playerAngle = degrees(Math.atan(verticalDistance / horizontalDistance))
+  //  if ((horizontalDistance == 0 && verticalDistance == 0) || ((Math.sqrt(horizontalDistance ** 2 + verticalDistance ** 2) < 40) && ((this.facing == RIGHT && playerAngle < 60 && this.xpos-playerPosition[0] < 0) || (this.facing == LEFT && playerAngle < 60 && this.xpos-playerPosition[0] > 0) || (this.facing == DOWN && playerAngle > 30 && this.ypos-playerPosition[1] < 0) || (this.facing == UP && playerAngle > 30 && this.ypos-playerPosition[1] > 0)))) {
+  //    return true
+  //  }
+  //  return false
+  //}
+
   testCollisionWithPlayer() {
     let playerPosition = player.getPosition()
-    let horizontalDistance = Math.abs(this.xpos - playerPosition[0])
-    let verticalDistance = Math.abs(this.ypos - playerPosition[1])
+    let horizontalDistance = this.xpos - playerPosition[0]
+    let verticalDistance = this.ypos - playerPosition[1]
+    let distance = Math.sqrt(horizontalDistance ** 2 + verticalDistance ** 2)
     let playerAngle = degrees(Math.atan(verticalDistance / horizontalDistance))
-    if ((horizontalDistance == 0 && verticalDistance == 0) || ((Math.sqrt(horizontalDistance ** 2 + verticalDistance ** 2) < 40) && ((this.facing == RIGHT && playerAngle < 60 && this.xpos-playerPosition[0] < 0) || (this.facing == LEFT && playerAngle < 60 && this.xpos-playerPosition[0] > 0) || (this.facing == DOWN && playerAngle > 30 && this.ypos-playerPosition[1] < 0) || (this.facing == UP && playerAngle > 30 && this.ypos-playerPosition[1] > 0)))) {
-      return true
+    if(horizontalDistance >= 0){
+      playerAngle+= 180
     }
-    return false
+    playerAngle = (playerAngle+360)%360
+    return distance < size*.5+40 && playerAngle < this.facing*9+70 && playerAngle > this.facing*9-70
   }
 }
