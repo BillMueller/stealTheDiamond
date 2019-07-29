@@ -6,6 +6,7 @@ class GUI {
   draw() {
     this.drawGUIBorder()
     this.drawStaminaBar()
+    this.drawCautionBar()
   }
 
   drawStaminaBar() {
@@ -20,6 +21,20 @@ class GUI {
     strokeWeight(guiBorder / 25)
     fill(25, 50, 255)
     rect(width - guiBorder * 4.75, height - guiBorder * 1.25, stamina * guiBorder / maxStamina * 4, guiBorder * 0.75)
+  }
+
+  drawCautionBar(){
+    textSize(guiBorder / 2)
+    noStroke()
+    fill(0, 0, 0)
+    text("Caution", 0 + guiBorder * 6, height - guiBorder * 0.75)
+    stroke(0, 0, 0)
+    strokeWeight(guiBorder / 12.5)
+    noFill()
+    rect(0 + guiBorder * 4.75, height - guiBorder * 1.25, -guiBorder * 4, guiBorder * 0.75)
+    strokeWeight(guiBorder / 25)
+    fill(255, 50, 25)
+    rect(0 + guiBorder * .75, height - guiBorder * 1.25, caution * guiBorder / maxCaution * 4, guiBorder * 0.75)
   }
 
   drawGUIBorder() {
@@ -39,7 +54,7 @@ class GUI {
     }
   }
 
-  updateStaminaBar() {
+  updateStamina() {
     if (stamina < maxStamina) {
       stamina++
       if (!playerMoves) {
