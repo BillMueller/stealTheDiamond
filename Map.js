@@ -62,6 +62,14 @@ class Map {
               this.loadedProps.push(new RandomRoofCamera(currentProp))
               break
           }
+          break
+        case 3:
+          currentProp.shift()
+          this.loadedProps.push(new MovementSensor(currentProp))
+          break
+        case 4:
+          currentProp.shift()
+          this.loadedProps.push(new PowerSwitch(currentProp))
       }
     }
   }

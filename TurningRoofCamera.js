@@ -16,40 +16,46 @@ class TurningRoofCamera {
   }
 
   move() {
-    this.currentAngle = (this.currentAngle + 360) % 360
-    if (this.direction == CLOCKWISE) {
-      this.currentAngle += this.speed
-    } else {
-      this.currentAngle -= this.speed
+    if (power) {
+      this.currentAngle = (this.currentAngle + 360) % 360
+      if (this.direction == CLOCKWISE) {
+        this.currentAngle += this.speed
+      } else {
+        this.currentAngle -= this.speed
+      }
     }
   }
 
   draw() {
     translate(this.xpos, this.ypos)
     rotate(radians(this.currentAngle))
-    if (difficulty != HARD) {
+    if (difficulty != HARD && power) {
       this.drawVisionArea()
     }
     stroke(0)
-    strokeWeight(size*0.75)
-    point(0,0,0)
+    strokeWeight(size * 0.75)
+    point(0, 0, 0)
     noStroke()
     fill(0)
-    triangle(size*0.9,0,0,size/4,0,-size/4)
+    triangle(size * 0.9, 0, 0, size / 4, 0, -size / 4)
     resetMatrix()
   }
 
   testCollisionWithPlayer() {
-    let playerPosition = player.getPosition()
-    let horizontalDistance = this.xpos - playerPosition[0]
-    let verticalDistance = this.ypos - playerPosition[1]
-    let distance = Math.sqrt(horizontalDistance ** 2 + verticalDistance ** 2)
-    let playerAngle = degrees(Math.atan(verticalDistance / horizontalDistance))
-    if (horizontalDistance >= 0) {
-      playerAngle += 180
+    if (power) {
+      let playerPosition = player.getPosition()
+      let horizontalDistance = this.xpos - playerPosition[0]
+      let verticalDistance = this.ypos - playerPosition[1]
+      let distance = Math.sqrt(horizontalDistance ** 2 + verticalDistance ** 2)
+      let playerAngle = degrees(Math.atan(verticalDistance / horizontalDistance))
+      if (horizontalDistance >= 0) {
+        playerAngle += 180
+      }
+      playerAngle = (playerAngle + 360) % 360
+      return distance < size * .5 + 45 && playerAngle < this.currentAngle + 50 && playerAngle > this.currentAngle - 50
+    } else {
+      return false
     }
-    playerAngle = (playerAngle + 360) % 360
-    return distance < size * .5 + 45 && playerAngle < this.currentAngle + 50 && playerAngle > this.currentAngle - 50
   }
 
   drawVisionArea() {
