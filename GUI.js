@@ -34,7 +34,7 @@ class GUI {
     rect(0 + guiBorder * 4.75, height - guiBorder * 1.25, -guiBorder * 4, guiBorder * 0.75)
     strokeWeight(guiBorder / 25)
     fill(255, 50, 25)
-    rect(0 + guiBorder * .75, height - guiBorder * 1.25, caution * guiBorder / maxCaution * 4, guiBorder * 0.75)
+    rect(0 + guiBorder * .75, height - guiBorder * 1.25, caution.getCaution() * guiBorder / caution.getMaxCaution() * 4, guiBorder * 0.75)
   }
 
   drawGUIBorder() {

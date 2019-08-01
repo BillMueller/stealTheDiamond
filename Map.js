@@ -4,7 +4,6 @@ class Map {
     this.props = props
     this.ySize = this.map.length
     this.xSize = this.map[0].length
-    this.sprites = []
     this.prepareProps()
   }
 

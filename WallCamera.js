@@ -68,7 +68,7 @@ class WallCamera {
         playerAngle += 180
       }
       playerAngle = (playerAngle + 360) % 360
-      return distance < size * .5 + 45 && playerAngle < this.currentAngle + 50 && playerAngle > this.currentAngle - 50
+      return distance < size * .5 + 40+difficulty*5 && playerAngle < this.currentAngle + 50 && playerAngle > this.currentAngle - 50
     } else {
       return false
     }
@@ -77,6 +77,6 @@ class WallCamera {
   drawVisionArea() {
     noStroke()
     fill(0, 0, 255, 150)
-    arc(size * 0.5, 0, 90, 90, radians(-50), radians(50))
+    arc(size * 0.5, 0, 80+difficulty*10, 80+difficulty*10, radians(-50), radians(50))
   }
 }

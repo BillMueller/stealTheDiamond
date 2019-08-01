@@ -52,7 +52,7 @@ class TurningRoofCamera {
         playerAngle += 180
       }
       playerAngle = (playerAngle + 360) % 360
-      return distance < size * .5 + 45 && playerAngle < this.currentAngle + 50 && playerAngle > this.currentAngle - 50
+      return distance < size * .5 + 40+difficulty*5 && playerAngle < this.currentAngle + 50 && playerAngle > this.currentAngle - 50
     } else {
       return false
     }
@@ -61,6 +61,6 @@ class TurningRoofCamera {
   drawVisionArea() {
     noStroke()
     fill(0, 0, 255, 150)
-    arc(0, 0, 90, 90, radians(-50), radians(50))
+    arc(0, 0, 80+difficulty*10, 80+difficulty*10, radians(-50), radians(50))
   }
 }

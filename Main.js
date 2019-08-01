@@ -12,12 +12,14 @@ let outsideImage
 const EASY = 0
 const MEDIUM = 1
 const HARD = 2
-let difficulty = EASY
+let difficulty = MEDIUM
 let power = true
 const maxStamina = 500
 let stamina = maxStamina
-const maxCaution = 500
-let caution = maxCaution/10*difficulty
+let caution
+//const maxCaution = 1000
+//const minCaution = maxCaution/5*difficulty
+//let caution = minCaution
 const HORIZONTAL = true
 const VERTICAL = false
 const UP = 30
@@ -28,6 +30,11 @@ const INCREASING = true
 const DECREASING = false
 const CLOCKWISE = true
 const ANTICLOCKWISE = false
+const SENSOR = 0
+const CAMERA = 1
+const GUARD = 2
+const POWER = 3
+let gameOver = false
 
 //maps:
 
@@ -63,12 +70,17 @@ function setup() {
   currentMap.spawnPlayer()
   gui = new GUI()
   textAlign(CENTER)
+  caution = new Caution()
 }
 
 function draw() {
-  preRender()
-  update()
-  render()
+  if (!gameOver) {
+    preRender()
+    update()
+    render()
+  } else {
+    window.alert("go")
+  }
 }
 
 //---
